@@ -1,7 +1,7 @@
 package goposter
 
 import (
-	"goposter/utils"
+	"github.com/danielrqzeng/goposter/utils"
 	"math"
 	"testing"
 )

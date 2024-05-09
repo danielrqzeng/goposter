@@ -3,7 +3,7 @@ package goposter
 import (
 	"bytes"
 	"github.com/chai2010/webp"
-	"goposter/utils"
+	"github.com/danielrqzeng/goposter/utils"
 	"os"
 )
 

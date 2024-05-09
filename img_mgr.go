@@ -3,7 +3,7 @@ package goposter
 import (
 	"bytes"
 	"fmt"
-	"goposter/utils"
+	"github.com/danielrqzeng/goposter/utils"
 	"strconv"
 	"sync"
 )

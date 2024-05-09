@@ -2,7 +2,7 @@ package goposter
 
 import (
 	"bytes"
-	"goposter/utils"
+	"github.com/danielrqzeng/goposter/utils"
 	"image/png"
 	"os"
 )

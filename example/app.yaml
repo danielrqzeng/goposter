@@ -50,7 +50,7 @@ posterList:
     Width: "{{.width}}" # 模板变量-画布的宽度（其实为手机的宽度）
     Height: "{{.height}}"
     CanvasBackgroundColor: "#FFFFFF" # 纯白
-    OutputBufferType: "#FFFFFF" # 输出图片类型，png|jpeg|webp
+    OutputBufferType: "png" # 输出图片类型，png|jpeg|webp
     SubImageInfoList:
       - ID: "avatar"
         Name: "avatar"
