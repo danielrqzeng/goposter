@@ -88,6 +88,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 	if err != nil {
 		return
 	}
+	canvas.SetID("canvas") // 画板id
 
 	for _, s := range imageConfigInfo.SubImageInfoList {
 		if !s.Enable {
@@ -383,7 +384,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 				subImg.SetID(s.ID)
 				imageMap[s.ID] = subImg
 			}
-		} // end for idx, a := range s.ActionList {
+		} // end for idx, a := range s.ActionList
 		//configMap[s.ID] = s
 	}
 

@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/danielrqzeng/goposter"
+	"os"
 
 	"github.com/spf13/viper"
 	"text/template"
@@ -94,7 +95,19 @@ func main() {
 		return
 	}
 
-	err = goposter.GenByImageConfig(imageConfigInfo)
+	imgFile := "output.png"
+	buffer, err := goposter.ImageMgr().GenByImageConfig(imageConfigInfo)
+	if err != nil {
+		return
+	}
+	dstFile, err := os.Create(imgFile)
+	if err != nil {
+		return
+	}
+	defer dstFile.Close()
+
+	// 将byte数据写入文件
+	_, err = dstFile.Write(buffer.Bytes())
 	if err != nil {
 		return
 	}
