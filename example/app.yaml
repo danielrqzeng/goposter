@@ -20,8 +20,6 @@
 #                        +------------+
 #                        |   relative |
 #                        +------------+
-#                        |   relative |
-#                        +------------+
 
 
 # /*
@@ -41,6 +39,61 @@
 #		|				|	|	|
 #		|-----------------------|
 #	*/
+
+blendent:
+  bgColor: &bgColor "#FFFFFF" # 白色
+  hgColor: &hgColor "#FF0000" # 红色
+  mainColor: &mainColor "#000000" # 黑色
+
+#  bgColor: &bgColor "#CAD9D1"
+#  hgColor: &hgColor  "#133789"
+#  mainColor: &mainColor "#000000" # 黑色
+#
+#  bgColor: &bgColor "#D7ECF1" # 月白
+#  hgColor: &hgColor "#0EB0C9" # 孔雀蓝
+#  mainColor: &mainColor "#000000" # 黑色
+#
+#  bgColor: &bgColor "#E4C6D0" # 藕荷色
+#  hgColor: &hgColor "#4B5CC4" # 宝蓝
+#  mainColor: &mainColor "#000000" # 黑色
+#
+#  bgColor: &bgColor "#EAECF1" # 浅云
+#  hgColor: &hgColor "#8BA3C7" # 东方既白
+#  mainColor: &mainColor "#000000" # 黑色
+#
+#  bgColor: &bgColor "#F9D3E3" # 盈盈
+#  hgColor: &hgColor "#4781C3" # 苍苍
+#  mainColor: &mainColor "#000000" # 黑色
+#
+#  bgColor: &bgColor "#8895B5" # 浅蓝灰
+#  hgColor: &hgColor "#84533F" # 火岩棕
+#  mainColor: &mainColor "#3D5346" # 晶石紫
+#
+#  bgColor: &bgColor "#BCBEBB" # 月影白
+#  hgColor: &hgColor "#466746" # 荷叶绿
+#  mainColor: &mainColor "#4E1B24" # 石竹紫
+#
+#  bgColor: &bgColor "#CCE4DD" # 月影白
+#  hgColor: &hgColor "#50381D" # 荷叶绿
+#  mainColor: &mainColor "#B9C66A" # 石竹紫
+#
+#
+#  bgColor: &bgColor "#FFA631" # 杏黄
+#  hgColor: &hgColor "#003472" # 花青
+#  mainColor: &mainColor "#000000" # 黑色
+#
+#  bgColor: &bgColor "#FFF143" # 鹅黄
+#  hgColor: &hgColor "#FF7500" # 橘红
+#  mainColor: &mainColor "#000000" # 黑色
+#
+#  bgColor: &bgColor "#A1AFC9" # 蓝灰色
+#  hgColor: &hgColor "#ED5736" # 妃色
+#  mainColor: &mainColor "#000000" # 黑色
+
+#  bgColor: &bgColor "#75664D" # 黎
+#  hgColor: &hgColor "#4C221B" # 紫檀
+#  mainColor: &mainColor "#FFFFFF" # 百色
+
 posterList:
   - ID: "classic_poster"
     Name: "classic_poster"
@@ -49,7 +102,7 @@ posterList:
     PixelRatio:  "{{.pixel_ratio}}" # 设备像素比,一般是逻辑像素和物理像素的比率，比如iphone5的逻辑像素是(320,568),物理像素是（640,1136),设备像素比为2
     Width: "{{.width}}" # 模板变量-画布的宽度（其实为手机的宽度）
     Height: "{{.height}}"
-    CanvasBackgroundColor: "#FFFFFF" # 纯白
+    CanvasBackgroundColor: *bgColor # 纯白
     OutputBufferType: "png" # 输出图片类型，png|jpeg|webp
     SubImageInfoList:
       - ID: "avatar"
@@ -84,7 +137,7 @@ posterList:
             Text: "{{.name}}"  # 文本
             FontBackgroundColor: "" # 文本背景颜色，（只支持#FFFFFF格式)
             FontFile: "../assets/SourceHanSerifSC-Bold.ttf" # 字体文件
-            FontColor: "#000000" # 字体颜色（只支持#FFFFFF格式)，必需字段
+            FontColor: *mainColor # 字体颜色（只支持#FFFFFF格式)，必需字段
             FontSizeByHeightPercent: "6%" # 字体大小,画布高度的百分比
             MaxWidth: "80%" # 字体最大宽度,整数或者百分数，如是百分数，则基于画布来计算
           - ActionType: "location" # 将子图画在画布中
@@ -105,12 +158,12 @@ posterList:
           - ActionType: "resize" # 调整大小
             ResizeType: 1  # 调整大小的规则,0:none,1:根据指定宽高,2:只依据宽度,3:只依据高度
             ResizeWidth: "94%" # 可为整数或者百分数（如果是百分数，则基于画布来计算）
-            ResizeHeight: "60%" # 可为整数或者百分数（如果是百分数，则基于画布来计算）
+            ResizeHeight: "65%" # 可为整数或者百分数（如果是百分数，则基于画布来计算）
           - ActionType: "round" # 圆角特效
             RoundRadius: "2%" # 图的矩形圆角半径,整数或者百分数，如果是百分数，代表基于本图width的圆角半径
           - ActionType: "location" # 将子图画在画布中
             LocationType: "mixed"  # 定位类型，absolute|relative|mixed
-            RelativeToImageID: "image" # 相对定位时候子图id
+            RelativeToImageID: "avatar" # 相对定位时候子图id
             AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
             RelativePosition: "2% none none none" # 相对于image，下移动3%
 
@@ -121,17 +174,21 @@ posterList:
         Enable: true # 是否启用
         ActionList:
           - ActionType: "font" # 类型为文字
-            Text: "{{.highlight}}"  # 文本
-            FontBackgroundColor: "" # 文本背景颜色，（只支持#FFFFFF格式)
+            Text: " {{.highlight}} "  # 文本
+            FontBackgroundColor: *hgColor # 文本背景颜色，（只支持#FFFFFF格式)
             FontFile: "../assets/SourceHanSerifSC-Bold.ttf" # 字体文件
-            FontColor: "#FF0000" # 字体颜色（只支持#FFFFFF格式)，必需字段
-            FontSizeByHeightPercent: "6%" # 字体大小,画布长度的百分比
+            FontColor: "#FFFFFF" # 字体颜色（只支持#FFFFFF格式)，必需字段
+            FontSizeByHeightPercent: "6%" # 字体大小,画布高度的百分比
             MaxWidth: "80%" # 字体最大宽度,整数或者百分数，如是百分数，则基于画布来计算
+          - ActionType: "circle" # 将头像截圆
+            CircleOriginX: "0"  # 图的原点x，整数或者百分数（百分数的话，是基于本图，而不是画布的），none代表不指定，由子图自计算
+            CircleOriginY: "0" # 图的原点y，整数或者百分数
+            CircleRadius: "0" # 图的半径，整数（0代表依据本图计算）
           - ActionType: "location" # 将子图画在画布中
             LocationType: "mixed"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "main_image" # 相对定位时候子图id
-            AbsolutePosition: "3% none none none" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
-            RelativePosition: "none none none 2%" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
+            AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+            RelativePosition: "3% none none none" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
 
       - ID: "title"
         Name: "title"
@@ -142,33 +199,56 @@ posterList:
             Text: "{{.title}}"  # 文本
             FontBackgroundColor: "" # 文本背景颜色，（只支持#FFFFFF格式)
             FontFile: "../assets/SourceHanSerifSC-Light.ttf" # 字体文件
-            FontColor: "#000000" # 字体颜色（只支持#FFFFFF格式)，必需字段
-            FontSizeByHeightPercent: "3.5%" # 字体大小,画布长度的百分比
+            FontColor: *hgColor # 字体颜色（只支持#FFFFFF格式)，必需字段
+            FontSizeByHeightPercent: "5.5%" # 字体大小,画布长度的百分比
             MaxWidth: "80%" # 字体最大宽度,整数或者百分数，如是百分数，则基于画布来计算
+          - ActionType: "round" # 圆角特效
+            RoundRadius: "2%" # 图的矩形圆角半径,整数或者百分数，如果是百分数，代表基于本图width的圆角半径
           - ActionType: "location" # 将子图画在画布中
+#            LocationType: "mixed"  # 定位类型，absolute|relative|mixed
+#            RelativeToImageID: "main_image" # 相对定位时候子图id
+#            AbsolutePosition: "none none none 11%" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+#            RelativePosition: "3% none none none" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
             LocationType: "relative"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "highlight" # 相对定位时候子图id
             AbsolutePosition: "none none none none" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
-            RelativePosition: "none none 0 2%" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
+            RelativePosition: "-6.0% none none 11%" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
 
-
-      - ID: "desc"
-        Name: "desc"
+      - ID: "desc1"
+        Name: "desc1"
         Desc: "描述"
         Enable: true # 是否启用
         ActionList:
           - ActionType: "font" # 类型为文字
-            Text: "{{.desc}}"  # 文本
+            Text: " {{.desc1}}"  # 文本
             FontBackgroundColor: "" # 文本背景颜色，（只支持#FFFFFF格式)
             FontFile: "../assets/SourceHanSerifSC-Light.ttf" # 字体文件
-            FontColor: "#000000" # 字体颜色（只支持#FFFFFF格式)，必需字段
-            FontSizeByHeightPercent: "3.5%" # 字体大小,画布长度的百分比
+            FontColor: *mainColor # 字体颜色（只支持#FFFFFF格式)，必需字段
+            FontSizeByHeightPercent: "3.1%" # 字体大小,画布长度的百分比
             MaxWidth: "80%" # 字体最大宽度,整数或者百分数，如是百分数，则基于画布来计算
           - ActionType: "location" # 将子图画在画布中
-            LocationType: "relative"  # 定位类型，absolute|relative|mixed
+            LocationType: "mixed"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "highlight" # 相对定位时候子图id
-            AbsolutePosition: "none none none none" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
-            RelativePosition: "1% none none 0" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
+            AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+            RelativePosition: "1% none none none" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
+
+      - ID: "desc2"
+        Name: "desc2"
+        Desc: "描述"
+        Enable: true # 是否启用
+        ActionList:
+          - ActionType: "font" # 类型为文字
+            Text: " {{.desc2}}"  # 文本
+            FontBackgroundColor: "" # 文本背景颜色，（只支持#FFFFFF格式)
+            FontFile: "../assets/SourceHanSerifSC-Light.ttf" # 字体文件
+            FontColor: *mainColor # 字体颜色（只支持#FFFFFF格式)，必需字段
+            FontSizeByHeightPercent: "3.1%" # 字体大小,画布长度的百分比
+            MaxWidth: "80%" # 字体最大宽度,整数或者百分数，如是百分数，则基于画布来计算
+          - ActionType: "location" # 将子图画在画布中
+            LocationType: "mixed"  # 定位类型，absolute|relative|mixed
+            RelativeToImageID: "desc1" # 相对定位时候子图id
+            AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+            RelativePosition: "1% none none none" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
 
 
       - ID: "qr_code"
@@ -182,7 +262,7 @@ posterList:
             ImageURLFile: "" # url图片，填入地址
           - ActionType: "resize" # 调整大小
             ResizeType: 2  # 调整大小的规则,0:none,1:根据指定宽高,2:只依据宽度,3:只依据高度
-            ResizeWidth: "35%" # 可为整数或者百分数（如果是百分数，则基于画布来计算）
+            ResizeWidth: "30%" # 可为整数或者百分数（如果是百分数，则基于画布来计算）
             ResizeHeight: "" # 可为整数或者百分数（如果是百分数，则基于画布来计算）
           - ActionType: "location" # 将子图画在画布中
             LocationType: "mixed"  # 定位类型，absolute|relative|mixed

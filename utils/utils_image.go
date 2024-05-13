@@ -194,7 +194,7 @@ func ParseNumPercentNumNone(numStr string, baseSize int) (isNone bool, realSize 
 	}
 
 	//如果是百分数，则通过父size转换得到最终大小，格式如45%
-	pattern = `^\d+(\.\d+)?%$`
+	pattern = `^-?\d+(\.\d+)?%$`
 	matched, err = regexp.MatchString(pattern, numStr)
 	if err != nil {
 		return
