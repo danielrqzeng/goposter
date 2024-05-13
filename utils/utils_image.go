@@ -176,7 +176,7 @@ func ParseNumPercentNumNone(numStr string, baseSize int) (isNone bool, realSize 
 		return
 	}
 	//如果是纯数字，则转换为int
-	pattern := `^\d+(\.\d+)?$`
+	pattern := `^-?\d+(\.\d+)?$`
 	matched, err := regexp.MatchString(pattern, numStr)
 	if err != nil {
 		return

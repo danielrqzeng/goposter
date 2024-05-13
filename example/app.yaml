@@ -174,11 +174,11 @@ posterList:
         Enable: true # 是否启用
         ActionList:
           - ActionType: "font" # 类型为文字
-            Text: " {{.highlight}} "  # 文本
+            Text: " {{.highlight}}.."  # 文本
             FontBackgroundColor: *hgColor # 文本背景颜色，（只支持#FFFFFF格式)
             FontFile: "../assets/SourceHanSerifSC-Bold.ttf" # 字体文件
             FontColor: "#FFFFFF" # 字体颜色（只支持#FFFFFF格式)，必需字段
-            FontSizeByHeightPercent: "6%" # 字体大小,画布高度的百分比
+            FontSizeByHeightPercent: "6.5%" # 字体大小,画布高度的百分比
             MaxWidth: "80%" # 字体最大宽度,整数或者百分数，如是百分数，则基于画布来计算
           - ActionType: "circle" # 将头像截圆
             CircleOriginX: "0"  # 图的原点x，整数或者百分数（百分数的话，是基于本图，而不是画布的），none代表不指定，由子图自计算
@@ -212,7 +212,7 @@ posterList:
             LocationType: "relative"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "highlight" # 相对定位时候子图id
             AbsolutePosition: "none none none none" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
-            RelativePosition: "-6.0% none none 11%" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
+            RelativePosition: "-5.5% none none 2%" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
 
       - ID: "desc1"
         Name: "desc1"
@@ -220,7 +220,7 @@ posterList:
         Enable: true # 是否启用
         ActionList:
           - ActionType: "font" # 类型为文字
-            Text: " {{.desc1}}"  # 文本
+            Text: " {{.desc1}}."  # 文本
             FontBackgroundColor: "" # 文本背景颜色，（只支持#FFFFFF格式)
             FontFile: "../assets/SourceHanSerifSC-Light.ttf" # 字体文件
             FontColor: *mainColor # 字体颜色（只支持#FFFFFF格式)，必需字段
@@ -238,7 +238,7 @@ posterList:
         Enable: true # 是否启用
         ActionList:
           - ActionType: "font" # 类型为文字
-            Text: " {{.desc2}}"  # 文本
+            Text: " {{.desc2}}."  # 文本
             FontBackgroundColor: "" # 文本背景颜色，（只支持#FFFFFF格式)
             FontFile: "../assets/SourceHanSerifSC-Light.ttf" # 字体文件
             FontColor: *mainColor # 字体颜色（只支持#FFFFFF格式)，必需字段
