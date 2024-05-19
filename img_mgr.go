@@ -26,15 +26,68 @@ func ImageMgr() *ImageMgrType {
 //ImageMgrType 实例定义
 type ImageMgrType struct {
 	sync.Mutex
+	debugColor [][2]string // 开启调试开关，调试背景色, [[rbga1,subImageID1],[rbga2,subImageID2],[rbga3,""]]
 }
 
 //Init 初始化
 func (mgr *ImageMgrType) Init() {
+	mgr.debugColor = make([][2]string, 0)
+	// 生成调试背景色
+	cl := []string{
+		//"00",
+		"11",
+		//"22",
+		"33",
+		//"44",
+		"55",
+		//"66",
+		"77",
+		//"88",
+		"99",
+		//"AA",
+		"BB",
+		//"CC",
+		"DD",
+		//"EE",
+		"FF",
+	}
+	rbgList := make([]string, 0)
+	for _, r := range cl {
+		for _, g := range cl {
+			for _, b := range cl {
+				for _, a := range cl {
+					a = "02" //给1%的透明
+					rbgList = append(rbgList, "#"+r+g+b+a)
+				}
+			}
+		}
+	}
+	for i := 0; i < len(rbgList); i++ {
+		mgr.debugColor = append(mgr.debugColor, [2]string{rbgList[i], ""})
+	}
+
 	go mgr.grLoop()
 }
 
 //grLoop 默认goroutine
 func (mgr *ImageMgrType) grLoop() {
+}
+
+//grLoop 默认goroutine
+func (mgr *ImageMgrType) GetDebugColor(subImageID string) (debugColor string) {
+	for idx, info := range mgr.debugColor {
+		//说明此颜色还没有被分配，分配之
+		if info[1] == "" {
+			mgr.debugColor[idx][1] = subImageID
+			return info[0]
+		}
+		//此颜色已经被分配给这个id了
+		if info[1] == subImageID {
+			return info[0]
+		}
+	}
+	//找不到更多的颜色分配了，默认返回透明黑色
+	return "#000000CC"
 }
 
 //GenPhoneImage 生成海报
@@ -310,6 +363,11 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 				parentSize := [2]int{canvas.GetImage().Bounds().Dx(), canvas.GetImage().Bounds().Dy()}
 				selfSize := [2]int{subImg.GetImage().Bounds().Dx(), subImg.GetImage().Bounds().Dy()}
 				minX, minY, maxX, maxY := 0, 0, 0, 0
+				debugColor := "" //如果为空，则代表不需要debug开启，debug背景色为空
+				if imageConfigInfo.Debug {
+					debugColor = mgr.GetDebugColor(s.ID)
+				}
+
 				switch a.LocationType {
 				//绝对定位
 				case LocationTypeAbsolute:
@@ -318,7 +376,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 						return
 					}
 					_, _ = maxX, maxY
-					err = canvas.DrawSubImage(subImg, minX, minY)
+					err = canvas.DrawSubImage(subImg, minX, minY, debugColor)
 					if err != nil {
 						return
 					}
@@ -334,7 +392,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 						return
 					}
 					_, _ = maxX, maxY
-					err = canvas.DrawSubImage(subImg, minX, minY)
+					err = canvas.DrawSubImage(subImg, minX, minY, debugColor)
 					if err != nil {
 						return
 					}
@@ -364,7 +422,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 					minX, minY = utils.MinInt(absoluteMinX, relativeMinX), utils.MinInt(absoluteMinY, relativeMinY)
 					fmt.Println(" minX, minY=", minX, minY)
 
-					err = canvas.DrawSubImage(subImg, minX, minY)
+					err = canvas.DrawSubImage(subImg, minX, minY, debugColor)
 					if err != nil {
 						return
 					}

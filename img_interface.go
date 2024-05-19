@@ -17,7 +17,7 @@ type IImage interface {
 	GetImage() (img *image.RGBA)                                                                                                     // 获取-*image.RGBA格式的实例
 	Resize(newWidth, newHeight uint) (err error)                                                                                     // 操作-重新设置大小
 	DrawImage(sub image.Image, x, y int) (err error)                                                                                 // 操作-在当前对象的(x,y)位置，叠着画上sub
-	DrawSubImage(sub IImage, x, y int) (err error)                                                                                   // 操作-叠画子图
+	DrawSubImage(sub IImage, x, y int, debugColorInHex string) (err error)                                                           // 操作-叠画子图
 	GetSubImagePosition(subImageID string) (position [4]int, err error)                                                              // 获取子图的位置
 	DrawRoundImage(radius float64) (err error)                                                                                       // 操作，给image加上矩形的圆角
 	DrawCircleImage(originX, originY, radius int) (err error)                                                                        //操作，裁剪为圆

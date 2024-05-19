@@ -84,10 +84,11 @@ type ImageConfigInfoType struct {
 	Name                  string                   `json:"name"`                    // 名称
 	Desc                  string                   `json:"desc"`                    // 备注说明
 	Enable                bool                     `json:"enable"`                  // 是否启用
+	Debug                 bool                     `json:"debug"`                   // 是否开启调试，如果开启了，则会给子图加入调式色块，以便于辨识面积和位置
+	PixelRatio            string                   `json:"pixel_ratio"`             // 设备像素比，一个浮点数
 	Width                 string                   `json:"width"`                   // 画布宽度,数字
 	Height                string                   `json:"height"`                  // 画布高度,数字
 	CanvasBackgroundColor string                   `json:"canvas_background_color"` //画布背景颜色，（只支持#FFFFFF格式)
-	PixelRatio            string                   `json:"pixel_ratio"`             // 设备像素比，一个浮点数
 	OutputBufferType      string                   `json:"output_buffer_type"`      // 输出图片类型，png|jpeg|webp
 	SubImageInfoList      []SubImageConfigInfoType `json:"sub_image_info_list"`     //子图列表
 }

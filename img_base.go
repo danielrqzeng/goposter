@@ -246,12 +246,26 @@ func (o *ImageBaseType) DrawImage(sub image.Image, x, y int) (err error) {
 }
 
 //DrawImage 操作-在当前对象的(x,y)位置，叠着画上sub
-func (o *ImageBaseType) DrawSubImage(sub IImage, x, y int) (err error) {
+func (o *ImageBaseType) DrawSubImage(sub IImage, x, y int, debugColorInHex string) (err error) {
 	//四角定位
 	r := sub.GetImage().Bounds().Add(image.Pt(x, y)) //计算处理子图像，应该放置在底图的矩形坐标系的点
 	o.id2Position[sub.ID()] = [4]int{r.Min.X, r.Min.Y, r.Max.X, r.Max.Y}
 
-	return o.DrawImage(sub.GetImage(), x, y)
+	err = o.DrawImage(sub.GetImage(), x, y)
+
+	// 如果开启了debug模式，则做debug背景色块
+	if debugColorInHex != "" {
+		debugMask := image.NewRGBA(sub.GetImage().Bounds())
+		debugColor, err1 := utils.Hex2RGB(debugColorInHex)
+		if err1 != nil {
+			err = err1
+			return
+		}
+		draw.Draw(debugMask, debugMask.Bounds(), &image.Uniform{C: debugColor}, image.Point{}, draw.Over)
+		err = o.DrawImage(debugMask, x, y)
+	}
+
+	return
 }
 
 //GetSubImagePosition 操作-获取子图的位置信息
