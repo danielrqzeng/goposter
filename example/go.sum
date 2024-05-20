@@ -44,6 +44,7 @@ github.com/danielrqzeng/goposter v0.0.0-20240512163355-510bf384f7f0 h1:u+AiGynv5
 github.com/danielrqzeng/goposter v0.0.0-20240512163355-510bf384f7f0/go.mod h1:bT7W6rGYJBTRoUchB2Rr+aYXwYqJxF5pjMibWjjnoBM=
 github.com/danielrqzeng/goposter v0.0.0-20240513170248-49332f4404b9/go.mod h1:bT7W6rGYJBTRoUchB2Rr+aYXwYqJxF5pjMibWjjnoBM=
 github.com/danielrqzeng/goposter v0.0.0-20240519160747-18044e416a2a/go.mod h1:bT7W6rGYJBTRoUchB2Rr+aYXwYqJxF5pjMibWjjnoBM=
+github.com/danielrqzeng/goposter v0.0.0-20240520163835-ac3aeb2e62d8/go.mod h1:bT7W6rGYJBTRoUchB2Rr+aYXwYqJxF5pjMibWjjnoBM=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZmtrrCbhqsmaPHjLKYnJCaQ=
