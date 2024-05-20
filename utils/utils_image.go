@@ -189,7 +189,7 @@ func ParseNumPercentNumNone(numStr string, baseSize int) (isNone bool, realSize 
 			return
 		}
 		realSize = int(tmp)
-		fmt.Println("pure number,numStr=", numStr, ",baseSize=", baseSize, ",size=", realSize)
+		//fmt.Println("pure number,numStr=", numStr, ",baseSize=", baseSize, ",size=", realSize)
 		return
 	}
 
@@ -207,7 +207,7 @@ func ParseNumPercentNumNone(numStr string, baseSize int) (isNone bool, realSize 
 			return
 		}
 		realSize = int(tmp / 100 * float64(baseSize))
-		fmt.Println("percent number,numStr=", numStr, ",baseSize=", baseSize, ",numStr=", numStr, ",tmp=", tmp, ",size=", realSize)
+		//fmt.Println("percent number,numStr=", numStr, ",baseSize=", baseSize, ",numStr=", numStr, ",tmp=", tmp, ",size=", realSize)
 
 		return
 	}

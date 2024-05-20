@@ -36,32 +36,30 @@ func (mgr *ImageMgrType) Init() {
 	cl := []string{
 		//"00",
 		"11",
-		//"22",
+		"22",
 		"33",
-		//"44",
+		"44",
 		"55",
-		//"66",
+		"66",
 		"77",
-		//"88",
+		"88",
 		"99",
-		//"AA",
+		"AA",
 		"BB",
-		//"CC",
+		"CC",
 		"DD",
-		//"EE",
-		"FF",
+		"EE",
+		//"FF",
 	}
 	rbgList := make([]string, 0)
-	for _, r := range cl {
-		for _, g := range cl {
-			for _, b := range cl {
-				for _, a := range cl {
-					a = "02" //给1%的透明
-					rbgList = append(rbgList, "#"+r+g+b+a)
-				}
-			}
-		}
+
+	a := "02" //给1%的透明
+	for _, c := range cl {
+		rbgList = append(rbgList, "#"+c+"0000"+a)
+		rbgList = append(rbgList, "#00"+c+"00"+a)
+		rbgList = append(rbgList, "#0000"+c+a)
 	}
+
 	for i := 0; i < len(rbgList); i++ {
 		mgr.debugColor = append(mgr.debugColor, [2]string{rbgList[i], ""})
 	}
@@ -75,6 +73,7 @@ func (mgr *ImageMgrType) grLoop() {
 
 //grLoop 默认goroutine
 func (mgr *ImageMgrType) GetDebugColor(subImageID string) (debugColor string) {
+	//mgr.debugColor = [[rbga1,subImageID1],[rbga2,subImageID2],[rbga3,""]]
 	for idx, info := range mgr.debugColor {
 		//说明此颜色还没有被分配，分配之
 		if info[1] == "" {
@@ -93,12 +92,9 @@ func (mgr *ImageMgrType) GetDebugColor(subImageID string) (debugColor string) {
 //GenPhoneImage 生成海报
 func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) (imgBuffer *bytes.Buffer, err error) {
 
-	//fmt.Println(imageConfigInfo)
-	//configMap := make(map[string]SubImageConfigInfoType)
 	imageMap := make(map[string]IImage)
 
 	//画布
-	//canvas := &ImageBaseType{}
 	var canvas IImage
 	isNone, canvasWidth, canvasHeight := true, 0, 0
 	isNone, canvasWidth, err = utils.ParseNumPercentNumNone(imageConfigInfo.Width, 0)
@@ -147,9 +143,8 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 		if !s.Enable {
 			continue
 		}
-		fmt.Println("----------------draw image=", s.Name, "--------------")
 		for idx, a := range s.ActionList {
-			fmt.Println("++++++++++++draw image=", s.Name, " with action=", a.ActionType, "++++++++++++")
+			//fmt.Println("++++++++++++draw image=", s.Name, " with action=", a.ActionType, "++++++++++++")
 			var subImg IImage
 			switch a.ActionType {
 			case ActionTypeImage:
@@ -207,7 +202,6 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 				*/
 				pixelRatio, err1 := strconv.ParseFloat(imageConfigInfo.PixelRatio, 64)
 				if err1 != nil {
-					fmt.Println(err1)
 					err = fmt.Errorf("PixelRatio=" + imageConfigInfo.PixelRatio + " unvalid")
 					return
 				}
@@ -252,7 +246,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 					return
 				}
 
-				fmt.Println("dpi=", dpi, ",fontSize=", fontSize)
+				//fmt.Println("dpi=", dpi, ",fontSize=", fontSize)
 				//fontSize := float64(a.FontSize) / pixelRatio
 				err = subImg.LoadFromText(a.Text, maxWidth, a.FontFile, dpi, fontSize, a.FontColor, a.FontBackgroundColor)
 				if err != nil {
@@ -417,10 +411,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 						return
 					}
 					_, _ = relativeMaxX, relativeMaxY
-					fmt.Println("absoluteMinX, absoluteMinY, absoluteMaxX, absoluteMaxY=", absoluteMinX, absoluteMinY, absoluteMaxX, absoluteMaxY)
-					fmt.Println("relativeMinX, relativeMinY, relativeMaxX, relativeMaxY=", relativeMinX, relativeMinY, relativeMaxX, relativeMaxY)
 					minX, minY = utils.MinInt(absoluteMinX, relativeMinX), utils.MinInt(absoluteMinY, relativeMinY)
-					fmt.Println(" minX, minY=", minX, minY)
 
 					err = canvas.DrawSubImage(subImg, minX, minY, debugColor)
 					if err != nil {
@@ -428,11 +419,11 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 					}
 				}
 
-				fmt.Println(fmt.Sprintf("[DRAW] %s(%d,%d) at %s(%d,%d) at (%d,%d)",
-					subImg.ID(), subImg.GetImage().Bounds().Dx(), subImg.GetImage().Bounds().Dy(),
-					canvas.ID(), canvas.GetImage().Bounds().Dx(), canvas.GetImage().Bounds().Dy(),
-					minX, minY,
-				))
+				//fmt.Println(fmt.Sprintf("[DRAW] %s(%d,%d) at %s(%d,%d) at (%d,%d)",
+				//	subImg.ID(), subImg.GetImage().Bounds().Dx(), subImg.GetImage().Bounds().Dy(),
+				//	canvas.ID(), canvas.GetImage().Bounds().Dx(), canvas.GetImage().Bounds().Dy(),
+				//	minX, minY,
+				//))
 			default:
 				err = fmt.Errorf("not support action type=" + a.ActionType)
 				return
