@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	pool *http.Client
+	httpPool *http.Client
 )
 
 // createHTTPClient for connection re-use
@@ -24,7 +24,7 @@ func createHTTPClientPool() *http.Client {
 }
 
 func getHttpRequestPool() *http.Client {
-	return pool
+	return httpPool
 }
 
 func DeferWhenOnRequestDone() func(retCode *int, msg, url, rBody, wBody *string) {
@@ -73,7 +73,7 @@ func RequestResource(resUrl string) (body io.ReadCloser, contentType string, err
 }
 
 func init() {
-	createHTTPClientPool()
+	httpPool = createHTTPClientPool()
 
 	time.AfterFunc(time.Duration(1)*time.Second, func() {
 	})
