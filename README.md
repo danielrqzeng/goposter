@@ -8,6 +8,7 @@
         > 也可以切换到无webp图片的分支使用，这样就是纯纯的go程序
     * go版本：乱搞即可
 * 可以参考`example`中的示例程序
+* 示例中，字体文件为可商用的思源雅黑，放置于`../assets/SourceHanSerifSC-Bold.ttf`,启动程序时候，要修改为自己放置的资源目录
 ```golang
 
 package main

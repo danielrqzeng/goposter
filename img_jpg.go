@@ -27,6 +27,25 @@ func (o *ImageJPGType) LoadFromFile(imgFile string) (err error) {
 	return
 }
 
+//LoadFromURL 加载-从url中加载
+func (o *ImageJPGType) LoadFromURL(imgURL string) (err error) {
+	resReader, _, err := utils.RequestResource(imgURL)
+	if err != nil {
+		return
+	}
+	defer resReader.Close()
+	var buff bytes.Buffer
+	_, err = buff.ReadFrom(resReader)
+	if err != nil {
+		return
+	}
+	err = o.LoadFromBuffer(&buff)
+	if err != nil {
+		return
+	}
+	return
+}
+
 //LoadFromBuffer 加载-从buffer中加载
 func (o *ImageJPGType) LoadFromBuffer(imgBuffer *bytes.Buffer) (err error) {
 	tmp, err := jpeg.Decode(imgBuffer)

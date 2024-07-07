@@ -26,42 +26,23 @@ type ImageBaseType struct {
 
 //LoadFromFile 加载-从文件中加载
 func (o *ImageBaseType) LoadFromFile(imgFile string) (err error) {
-	// 根据路径打开模板文件
-	imgFileHandler, err := os.Open(imgFile)
-	if err != nil {
-		return
-	}
-	defer imgFileHandler.Close()
-	tmp, err := webp.Decode(imgFileHandler)
-	if err != nil {
-		return
-	}
-	o.img = utils.ToRGBA(tmp)
+	// 部件自实现
+	err = fmt.Errorf("ImageBaseType not support")
 	return
 }
 
 //LoadFromBuffer 加载-从buffer中加载
 func (o *ImageBaseType) LoadFromBuffer(imgBuffer *bytes.Buffer) (err error) {
 	// 部件自实现
+	err = fmt.Errorf("ImageBaseType not support")
+
 	return
 }
 
 //LoadFromURL 加载-从url中加载
 func (o *ImageBaseType) LoadFromURL(imgURL string) (err error) {
-	resReader, _, err := utils.RequestResource(imgURL)
-	if err != nil {
-		return
-	}
-	defer resReader.Close()
-	var buff bytes.Buffer
-	_, err = buff.ReadFrom(resReader)
-	if err != nil {
-		return
-	}
-	err = o.LoadFromBuffer(&buff)
-	if err != nil {
-		return
-	}
+	// 部件自实现
+	err = fmt.Errorf("ImageBaseType not support")
 	return
 }
 
