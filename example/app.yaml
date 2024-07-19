@@ -109,7 +109,8 @@ posterList:
       - ID: "avatar"
         Name: "avatar"
         Desc: "头像"
-        Enable: true # 是否启用
+        Enable: "true" # 是否启用,字符串类型，以方便做模板渲染，只能是true|false
+        Other: "" # 其他信息，不参与到作图中，只是预留给业务使用
         ActionList:
           - ActionType: "image" # 类型为图片
             ImageType: "jpeg"  # 图片类型，png|jpeg|webp
@@ -132,7 +133,8 @@ posterList:
       - ID: "name"
         Name: "name"
         Desc: "名字"
-        Enable: true # 是否启用
+        Enable: "true" # 是否启用,字符串类型，以方便做模板渲染，只能是true|false
+        Other: "" # 其他信息，不参与到作图中，只是预留给业务使用
         ActionList:
           - ActionType: "font" # 类型为文字
             Text: "{{.name}}"  # 文本
@@ -150,7 +152,8 @@ posterList:
       - ID: "main_image"
         Name: "main_image"
         Desc: "正文图片"
-        Enable: true # 是否启用
+        Enable: "true" # 是否启用,字符串类型，以方便做模板渲染，只能是true|false
+        Other: "" # 其他信息，不参与到作图中，只是预留给业务使用
         ActionList:
           - ActionType: "image" # 类型为图片
             ImageType: "jpeg"  # 图片类型，png|jpeg|webp
@@ -172,7 +175,8 @@ posterList:
       - ID: "highlight"
         Name: "highlight"
         Desc: "高亮字"
-        Enable: true # 是否启用
+        Enable: "true" # 是否启用,字符串类型，以方便做模板渲染，只能是true|false
+        Other: "" # 其他信息，不参与到作图中，只是预留给业务使用
         ActionList:
           - ActionType: "font" # 类型为文字
             Text: " {{.highlight}}.."  # 文本
@@ -194,7 +198,8 @@ posterList:
       - ID: "title"
         Name: "title"
         Desc: "标题"
-        Enable: true # 是否启用
+        Enable: "true" # 是否启用,字符串类型，以方便做模板渲染，只能是true|false
+        Other: "" # 其他信息，不参与到作图中，只是预留给业务使用
         ActionList:
           - ActionType: "font" # 类型为文字
             Text: "{{.title}}"  # 文本
@@ -218,7 +223,8 @@ posterList:
       - ID: "desc1"
         Name: "desc1"
         Desc: "描述"
-        Enable: true # 是否启用
+        Enable: "true" # 是否启用,字符串类型，以方便做模板渲染，只能是true|false
+        Other: "" # 其他信息，不参与到作图中，只是预留给业务使用
         ActionList:
           - ActionType: "font" # 类型为文字
             Text: " {{.desc1}}."  # 文本
@@ -236,7 +242,8 @@ posterList:
       - ID: "desc2"
         Name: "desc2"
         Desc: "描述"
-        Enable: true # 是否启用
+        Enable: "true" # 是否启用,字符串类型，以方便做模板渲染，只能是true|false
+        Other: "" # 其他信息，不参与到作图中，只是预留给业务使用
         ActionList:
           - ActionType: "font" # 类型为文字
             Text: " {{.desc2}}."  # 文本
@@ -255,7 +262,8 @@ posterList:
       - ID: "qr_code"
         Name: "qr_code"
         Desc: "二维码图片"
-        Enable: true # 是否启用
+        Enable: "true" # 是否启用,字符串类型，以方便做模板渲染，只能是true|false
+        Other: "" # 其他信息，不参与到作图中，只是预留给业务使用
         ActionList:
           - ActionType: "image" # 类型为图片
             ImageType: "png"  # 图片类型，png|jpeg|webp

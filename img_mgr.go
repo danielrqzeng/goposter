@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/danielrqzeng/goposter/utils"
 	"strconv"
+	"strings"
 	"sync"
 )
 
@@ -140,8 +141,11 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 	canvas.SetID("canvas") // 画板id
 
 	for _, s := range imageConfigInfo.SubImageInfoList {
-		if !s.Enable {
+		if strings.ToUpper(s.Enable) == "false" {
 			continue
+		}
+		if strings.ToUpper(s.Enable) != "true" {
+			err = fmt.Errorf("for subImageID=" + s.ID + " enable only can set true|false")
 		}
 		for idx, a := range s.ActionList {
 			//fmt.Println("++++++++++++draw image=", s.Name, " with action=", a.ActionType, "++++++++++++")
@@ -156,7 +160,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 				case ImageTypeWEBP:
 					subImg = &ImageWEBPType{}
 				default:
-					err = fmt.Errorf("not support image type=" + a.ImageType)
+					err = fmt.Errorf("for subImageID=" + s.ID + " not support image type=" + a.ImageType)
 					return
 				}
 				// 从url加载

@@ -68,7 +68,8 @@ type SubImageConfigInfoType struct {
 	ID         string            `json:"id"`          // id
 	Name       string            `json:"name"`        // 名称
 	Desc       string            `json:"desc"`        // 备注说明
-	Enable     bool              `json:"enable"`      // 是否启用
+	Enable     string            `json:"enable"`      // 是否启用,字符串类型，以方便做模板渲染，只能是true|false
+	Other      string            `json:"other"`       // 其他信息，不参与到作图中，只是预留给业务使用
 	ActionList []ImageActionType `json:"action_list"` // 动作说明
 
 	//计算值，其是根据ActionList计算出来的坐标值
