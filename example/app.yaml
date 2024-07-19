@@ -104,7 +104,7 @@ posterList:
     Width: "{{.width}}" # 模板变量-画布的宽度（其实为手机的宽度）
     Height: "{{.height}}"
     CanvasBackgroundColor: *bgColor # 纯白
-    OutputBufferType: "png" # 输出图片类型，png|jpeg|webp
+    OutputBufferType: "png" # 输出图片类型，png|jpeg
     SubImageInfoList:
       - ID: "avatar"
         Name: "avatar"
@@ -113,7 +113,7 @@ posterList:
         Other: "" # 其他信息，不参与到作图中，只是预留给业务使用
         ActionList:
           - ActionType: "image" # 类型为图片
-            ImageType: "jpeg"  # 图片类型，png|jpeg|webp
+            ImageType: "jpeg"  # 图片类型，png|jpeg
             ImageLocalFile: "{{.avatar_url}}" # 如果是本地图片，填入图片地址
             ImageURLFile: "" # url图片，填入地址
           - ActionType: "resize" # 调整大小
@@ -156,7 +156,7 @@ posterList:
         Other: "" # 其他信息，不参与到作图中，只是预留给业务使用
         ActionList:
           - ActionType: "image" # 类型为图片
-            ImageType: "jpeg"  # 图片类型，png|jpeg|webp
+            ImageType: "jpeg"  # 图片类型，png|jpeg
             ImageLocalFile: "{{.main_url}}" # 如果是本地图片，填入图片地址
             ImageURLFile: "" # url图片，填入地址
           - ActionType: "resize" # 调整大小
@@ -266,7 +266,7 @@ posterList:
         Other: "" # 其他信息，不参与到作图中，只是预留给业务使用
         ActionList:
           - ActionType: "image" # 类型为图片
-            ImageType: "png"  # 图片类型，png|jpeg|webp
+            ImageType: "png"  # 图片类型，png|jpeg
             ImageLocalFile: "{{.qr_code_url}}" # 如果是本地图片，填入图片地址
             ImageURLFile: "" # url图片，填入地址
           - ActionType: "resize" # 调整大小

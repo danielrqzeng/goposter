@@ -22,7 +22,6 @@ type IImage interface {
 	DrawRoundImage(radius float64) (err error)                                                                                       // 操作，给image加上矩形的圆角
 	DrawCircleImage(originX, originY, radius int) (err error)                                                                        //操作，裁剪为圆
 	SaveToBuffer() (imgBuffer *bytes.Buffer, err error)                                                                              // 保存-图片为buffer
-	SaveToWEBPFile(imgFile string) (err error)                                                                                       // 保存-图片为webp格式
 	SaveToPNGFile(imgFile string) (err error)                                                                                        // 保存-图片为png格式
 	SaveToJPEGFile(imgFile string) (err error)                                                                                       // 保存-图片为jpeg或者jpg格式
 }

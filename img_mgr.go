@@ -116,8 +116,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 	}
 	//检查图片类型
 	if imageConfigInfo.OutputBufferType != ImageTypePNG &&
-		imageConfigInfo.OutputBufferType != ImageTypeJPEG &&
-		imageConfigInfo.OutputBufferType != ImageTypeWEBP {
+		imageConfigInfo.OutputBufferType != ImageTypeJPEG {
 		err = fmt.Errorf("OutputBufferType err,not support image type=" + imageConfigInfo.OutputBufferType)
 		return
 	}
@@ -126,8 +125,6 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 		canvas = &ImagePNGType{}
 	case ImageTypeJPEG:
 		canvas = &ImageJPGType{}
-	case ImageTypeWEBP:
-		canvas = &ImageWEBPType{}
 	default:
 		err = fmt.Errorf("OutputBufferType err,not support image type=" + imageConfigInfo.OutputBufferType)
 		return
@@ -157,8 +154,6 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 					subImg = &ImagePNGType{}
 				case ImageTypeJPEG:
 					subImg = &ImageJPGType{}
-				case ImageTypeWEBP:
-					subImg = &ImageWEBPType{}
 				default:
 					err = fmt.Errorf("for subImageID=" + s.ID + " not support image type=" + a.ImageType)
 					return

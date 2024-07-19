@@ -3,7 +3,6 @@ package goposter
 import (
 	"bytes"
 	"fmt"
-	"github.com/chai2010/webp"
 	"github.com/danielrqzeng/goposter/utils"
 	"github.com/golang/freetype"
 	"github.com/golang/freetype/truetype"
@@ -312,28 +311,6 @@ func (o *ImageBaseType) SaveToBuffer() (imgBuffer *bytes.Buffer, err error) {
 	//	err = fmt.Errorf("imageType=" + utils.Num2Str(imageType) + " not support yet")
 	//	return
 	//}
-	return
-}
-
-//SaveToWEBPFile 保存-图片为webp格式
-func (o *ImageBaseType) SaveToWEBPFile(imgFile string) (err error) {
-	dstFile, err := os.Create(imgFile)
-	if err != nil {
-		return
-	}
-	defer dstFile.Close()
-	quality := float32(50.0)
-
-	webpByte, err := webp.EncodeRGBA(o.img, quality)
-	if err != nil {
-		return
-	}
-
-	// 将byte数据写入文件
-	_, err = dstFile.Write(webpByte)
-	if err != nil {
-		return
-	}
 	return
 }
 

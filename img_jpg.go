@@ -66,7 +66,7 @@ func (o *ImageJPGType) SaveToBuffer() (imgBuffer *bytes.Buffer, err error) {
 	return
 }
 
-//NewImageJPGType 新建一个webp文件加载的图像
+//NewImageJPGType 新建一个jpeg文件加载的图像
 func NewImageJPGType() (ImageJPG IImage) {
 	ImageJPG = &ImageJPGType{}
 	return

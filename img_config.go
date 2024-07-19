@@ -13,7 +13,6 @@ const (
 	ImageTypeNone = "none" //图片类型-无
 	ImageTypePNG  = "png"  //图片类型-png
 	ImageTypeJPEG = "jpeg" //图片类型-jpg或者jpeg
-	ImageTypeWEBP = "webp" //图片类型-webp
 
 	ResizeTypeByNone           = 0 //调整大小-无
 	ResizeTypeByWidthAndHeight = 1 //调整大小-根据宽高的调整
@@ -37,8 +36,8 @@ type ImageActionType struct {
 	FontColor               string `json:"font_color"`                  // 字体颜色（只支持#FFFFFF格式)，必需字段
 	MaxWidth                string `json:"max_width"`                   // 字体所占的最大宽度（为0不限制)，必需字段
 
-	//ActionType==image时候的字段(image只支持png,jpeg,webp格式）
-	ImageType       string `json:"image_type"`        //图片类型，image_type=png|jpeg|webp
+	//ActionType==image时候的字段(image只支持png,jpeg）
+	ImageType       string `json:"image_type"`        //图片类型，image_type=png|jpeg
 	ImageLocalFile  string `json:"image_local_file"`  //图片本地路径（为空代表不是本地图片),比如: /data/image/aa.jpeg
 	ImageURLFile    string `json:"image_url_file"`    //图片url路径（为空代表不是本地图片),比如: https://baidu.com/data/image/aa.jpeg
 	ImageCustomFile string `json:"image_custom_file"` //图片自定义来源，自定义方法获取，此类别让业务按照要求来使用，此处不启用
@@ -90,6 +89,6 @@ type ImageConfigInfoType struct {
 	Width                 string                   `json:"width"`                   // 画布宽度,数字
 	Height                string                   `json:"height"`                  // 画布高度,数字
 	CanvasBackgroundColor string                   `json:"canvas_background_color"` //画布背景颜色，（只支持#FFFFFF格式)
-	OutputBufferType      string                   `json:"output_buffer_type"`      // 输出图片类型，png|jpeg|webp
+	OutputBufferType      string                   `json:"output_buffer_type"`      // 输出图片类型，png|jpeg
 	SubImageInfoList      []SubImageConfigInfoType `json:"sub_image_info_list"`     //子图列表
 }
