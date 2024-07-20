@@ -138,10 +138,10 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 	canvas.SetID("canvas") // 画板id
 
 	for _, s := range imageConfigInfo.SubImageInfoList {
-		if strings.ToLower(s.Enable) == "false" {
+		if strings.TrimSpace(strings.ToLower(s.Enable)) == "false" {
 			continue
 		}
-		if strings.ToLower(s.Enable) != "true" {
+		if strings.TrimSpace(strings.ToLower(s.Enable)) != "true" {
 			err = fmt.Errorf("for subImageID=" + s.ID + " enable only can set true|false")
 			return
 		}
