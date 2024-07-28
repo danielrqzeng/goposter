@@ -141,7 +141,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 	canvas.SetID("canvas") // 画板id
 
 	for _, s := range imageConfigInfo.SubImageInfoList {
-		if strings.TrimSpace(strings.ToLower(s.Enable)) != "false" {
+		if strings.TrimSpace(strings.ToLower(s.Enable)) == "false" {
 			continue
 		}
 		if strings.TrimSpace(strings.ToLower(s.Enable)) != "true" {
