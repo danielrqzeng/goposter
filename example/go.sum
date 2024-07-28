@@ -36,6 +36,8 @@ github.com/coreos/pkg v0.0.0-20180928190104-399ea9e2e55f/go.mod h1:E3G3o1h8I7cfc
 github.com/danielrqzeng/goposter v0.0.0-20240719165406-53f8a35a1ec3 h1:PpokMmUA2zrfU5M5bkIxyTTVERKnk6vWaeoU+ORT0y4=
 github.com/danielrqzeng/goposter v0.0.0-20240719165406-53f8a35a1ec3/go.mod h1:bT7W6rGYJBTRoUchB2Rr+aYXwYqJxF5pjMibWjjnoBM=
 github.com/danielrqzeng/goposter v0.0.0-20240719171412-da7bb04c91ff/go.mod h1:sYdvs70iMG4yIlwm/YBHZK1ReS2rwlelK/9uLwVWGYI=
+github.com/danielrqzeng/goposter v0.0.0-20240720034727-bc9c3c945f7e/go.mod h1:bT7W6rGYJBTRoUchB2Rr+aYXwYqJxF5pjMibWjjnoBM=
+github.com/danielrqzeng/goposter v0.0.0-20240720035028-d85fdd5715cf/go.mod h1:sYdvs70iMG4yIlwm/YBHZK1ReS2rwlelK/9uLwVWGYI=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
