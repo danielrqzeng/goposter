@@ -97,8 +97,10 @@ blendent:
 posterList:
   - ID: "classic_poster"
     Name: "classic_poster"
-    Enable: true # 是否启用
+    Version: "v1.0.0" # 配置版本，比如版本1位v1.0.0后续可能添加了某个subimage，此时可以改动此版本以便重新生成
+    Enable: "" # 是否启用
     Desc: "经典布局"
+    Other: "" # 其他信息
     Debug: false # 是否开启调试，如果开启了，则会给子图加入调式色块，以便于辨识面积和位置
     PixelRatio:  "{{.pixel_ratio}}" # 设备像素比,一般是逻辑像素和物理像素的比率，比如iphone5的逻辑像素是(320,568),物理像素是（640,1136),设备像素比为2
     Width: "{{.width}}" # 模板变量-画布的宽度（其实为手机的宽度）

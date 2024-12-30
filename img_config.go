@@ -82,8 +82,10 @@ type SubImageConfigInfoType struct {
 type ImageConfigInfoType struct {
 	ID                    string                   `json:"id"`                      // id
 	Name                  string                   `json:"name"`                    // 名称
+	Version               string                   `json:"version"`                 // 配置版本，比如版本1位v1.0.0后续可能添加了某个subimage，此时可以改动此版本以便重新生成
 	Desc                  string                   `json:"desc"`                    // 备注说明
-	Enable                bool                     `json:"enable"`                  // 是否启用
+	Enable                string                   `json:"enable"`                  // 是否启用，注意此处为字符串类型,true为启用，其他为不启用
+	Other                 string                   `json:"other"`                   // 其他信息，不参与到作图中，只是预留给业务使用
 	Debug                 bool                     `json:"debug"`                   // 是否开启调试，如果开启了，则会给子图加入调式色块，以便于辨识面积和位置
 	PixelRatio            string                   `json:"pixel_ratio"`             // 设备像素比，一个浮点数
 	Width                 string                   `json:"width"`                   // 画布宽度,数字
