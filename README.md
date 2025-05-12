@@ -228,7 +228,7 @@ posterList:
           - ActionType: "location" # 将子图画在画布中
             LocationType: "absolute"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "" # 相对定位时候子图id
-            AbsolutePosition: "3% none none 3%" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+            AbsolutePosition: "3% none none 3%" # 相对于画布的定位值,可为整数|百分数|none|mid,顺序为top right bottom left
             RelativePosition: "none none none none" # 相对于子元素的定位值,可为整数|百分数(相对画布)|none,顺序为top right bottom left
 
       - ID: "name"
@@ -246,7 +246,7 @@ posterList:
           - ActionType: "location" # 将子图画在画布中
             LocationType: "mixed"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "avatar" # 相对定位时候子图id
-            AbsolutePosition: "3% none none none" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+            AbsolutePosition: "3% none none none" # 相对于画布的定位值,可为整数|百分数|none|mid,顺序为top right bottom left
             RelativePosition: "none none none 2%" # 相对于子图的定位值,可为整数|百分数(相对画布)|none,顺序为top right bottom left
 
       - ID: "main_image"
@@ -267,7 +267,7 @@ posterList:
           - ActionType: "location" # 将子图画在画布中
             LocationType: "mixed"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "avatar" # 相对定位时候子图id
-            AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+            AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none|mid,顺序为top right bottom left
             RelativePosition: "2% none none none" # 相对于image，下移动3%
 
 
@@ -290,7 +290,7 @@ posterList:
           - ActionType: "location" # 将子图画在画布中
             LocationType: "mixed"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "main_image" # 相对定位时候子图id
-            AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+            AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none|mid,顺序为top right bottom left
             RelativePosition: "3% none none none" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
 
       - ID: "title"
@@ -314,7 +314,7 @@ posterList:
             #            RelativePosition: "3% none none none" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
             LocationType: "relative"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "highlight" # 相对定位时候子图id
-            AbsolutePosition: "none none none none" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+            AbsolutePosition: "none none none none" # 相对于画布的定位值,可为整数|百分数|none|mid,顺序为top right bottom left
             RelativePosition: "-5.5% none none 2%" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
 
       - ID: "desc1"
@@ -332,7 +332,7 @@ posterList:
           - ActionType: "location" # 将子图画在画布中
             LocationType: "mixed"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "highlight" # 相对定位时候子图id
-            AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+            AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none|mid,顺序为top right bottom left
             RelativePosition: "1% none none none" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
 
       - ID: "desc2"
@@ -350,7 +350,7 @@ posterList:
           - ActionType: "location" # 将子图画在画布中
             LocationType: "mixed"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "desc1" # 相对定位时候子图id
-            AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+            AbsolutePosition: "none none none 3%" # 相对于画布的定位值,可为整数|百分数|none|mid,顺序为top right bottom left
             RelativePosition: "1% none none none" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
 
 
@@ -370,7 +370,7 @@ posterList:
           - ActionType: "location" # 将子图画在画布中
             LocationType: "mixed"  # 定位类型，absolute|relative|mixed
             RelativeToImageID: "main_image" # 相对定位时候子图id
-            AbsolutePosition: "none 3% none none" # 相对于画布的定位值,可为整数|百分数|none,顺序为top right bottom left
+            AbsolutePosition: "none 3% none none" # 相对于画布的定位值,可为整数|百分数|none|mid,顺序为top right bottom left
             RelativePosition: "3% none none none" # 相对于子元素的定位值,可为整数|百分数(相对父元素)|none,顺序为top right bottom left
 ```
 
@@ -409,7 +409,8 @@ posterList:
         图片的左上角为坐标原点
         ```
         * 定位类型之绝对定位：其参考系为画板，按照`top right bottom left`此类html元素布局来展开，可以填入数字或者画板的百分比数字，必须要填入两个维度的（比如x和y的方向）
-            > 举例: `AbsolutePosition: "3% none none 3%"`: 距离画板顶部3%距离,左侧3%距离放置
+            > * 举例: `AbsolutePosition: "3% none none 3%"`: 距离画板顶部3%距离,左侧3%距离放置
+            > * 举例: `AbsolutePosition: "3% mid none mid"`: 距离画板顶部3%距离,水平居中放置
        * 定位类型之相对定位：其参考系为子图，按照`top right bottom left`此类html元素布局来展开，可以填入数字或者画板的百分比数字，必须要填入两个维度的（比如x和y的方向）
             ```sql
             # 相对定位示意图

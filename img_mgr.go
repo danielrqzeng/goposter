@@ -9,13 +9,13 @@ import (
 	"sync"
 )
 
-//实例
+// 实例
 var (
 	ImageMgrInstance *ImageMgrType
 	ImageMgrOnce     sync.Once
 )
 
-//ImageMgr 获取单例实例
+// ImageMgr 获取单例实例
 func ImageMgr() *ImageMgrType {
 	ImageMgrOnce.Do(func() {
 		ImageMgrInstance = &ImageMgrType{}
@@ -24,13 +24,13 @@ func ImageMgr() *ImageMgrType {
 	return ImageMgrInstance
 }
 
-//ImageMgrType 实例定义
+// ImageMgrType 实例定义
 type ImageMgrType struct {
 	sync.Mutex
 	debugColor [][2]string // 开启调试开关，调试背景色, [[rbga1,subImageID1],[rbga2,subImageID2],[rbga3,""]]
 }
 
-//Init 初始化
+// Init 初始化
 func (mgr *ImageMgrType) Init() {
 	mgr.debugColor = make([][2]string, 0)
 	// 生成调试背景色
@@ -68,11 +68,11 @@ func (mgr *ImageMgrType) Init() {
 	go mgr.grLoop()
 }
 
-//grLoop 默认goroutine
+// grLoop 默认goroutine
 func (mgr *ImageMgrType) grLoop() {
 }
 
-//grLoop 默认goroutine
+// grLoop 默认goroutine
 func (mgr *ImageMgrType) GetDebugColor(subImageID string) (debugColor string) {
 	//mgr.debugColor = [[rbga1,subImageID1],[rbga2,subImageID2],[rbga3,""]]
 	for idx, info := range mgr.debugColor {
@@ -90,7 +90,7 @@ func (mgr *ImageMgrType) GetDebugColor(subImageID string) (debugColor string) {
 	return "#000000CC"
 }
 
-//GenPhoneImage 生成海报
+// GenPhoneImage 生成海报
 func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) (imgBuffer *bytes.Buffer, err error) {
 
 	imageMap := make(map[string]IImage)
@@ -98,7 +98,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 	//画布
 	var canvas IImage
 	isNone, canvasWidth, canvasHeight := true, 0, 0
-	isNone, canvasWidth, err = utils.ParseNumPercentNumNone(imageConfigInfo.Width, 0)
+	isNone, _, canvasWidth, err = utils.ParseNumPercentNumNone(imageConfigInfo.Width, 0)
 	if err != nil {
 		return
 	}
@@ -106,7 +106,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 		err = fmt.Errorf("canvasWidth not allow none")
 		return
 	}
-	isNone, canvasHeight, err = utils.ParseNumPercentNumNone(imageConfigInfo.Height, 0)
+	isNone, _, canvasHeight, err = utils.ParseNumPercentNumNone(imageConfigInfo.Height, 0)
 	if err != nil {
 		return
 	}
@@ -181,7 +181,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 			case ActionTypeFont:
 				subImg = &ImageBaseType{}
 				isNone, maxWidth := true, 0
-				isNone, maxWidth, err = utils.ParseNumPercentNumNone(a.MaxWidth, canvas.GetImage().Bounds().Dx())
+				isNone, _, maxWidth, err = utils.ParseNumPercentNumNone(a.MaxWidth, canvas.GetImage().Bounds().Dx())
 				if err != nil {
 					return
 				}
@@ -225,7 +225,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 
 				//fontsize默认是在dpi为72时候的尺寸，但是dpi也是依据PixelRatio计算除了的，所以fontsize也需要做下变换
 				parentSize := [2]int{canvas.GetImage().Bounds().Dx(), canvas.GetImage().Bounds().Dy()}
-				isNone, fontHeight, err1 := utils.ParseNumPercentNumNone(a.FontSizeByHeightPercent, parentSize[1])
+				isNone, _, fontHeight, err1 := utils.ParseNumPercentNumNone(a.FontSizeByHeightPercent, parentSize[1])
 				if err1 != nil {
 					err = err1
 					return
@@ -258,7 +258,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 				isNone, ResizeWidth, ResizeHeight := true, 0, 0
 				switch a.ResizeType {
 				case ResizeTypeByWidthAndHeight:
-					isNone, ResizeWidth, err = utils.ParseNumPercentNumNone(a.ResizeWidth, canvas.GetImage().Bounds().Dx())
+					isNone, _, ResizeWidth, err = utils.ParseNumPercentNumNone(a.ResizeWidth, canvas.GetImage().Bounds().Dx())
 					if err != nil {
 						return
 					}
@@ -266,7 +266,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 						err = fmt.Errorf("ResizeWidth not allow none")
 						return
 					}
-					isNone, ResizeHeight, err = utils.ParseNumPercentNumNone(a.ResizeHeight, canvas.GetImage().Bounds().Dy())
+					isNone, _, ResizeHeight, err = utils.ParseNumPercentNumNone(a.ResizeHeight, canvas.GetImage().Bounds().Dy())
 					if err != nil {
 						return
 					}
@@ -275,7 +275,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 						return
 					}
 				case ResizeTypeByWidth:
-					isNone, ResizeWidth, err = utils.ParseNumPercentNumNone(a.ResizeWidth, canvas.GetImage().Bounds().Dx())
+					isNone, _, ResizeWidth, err = utils.ParseNumPercentNumNone(a.ResizeWidth, canvas.GetImage().Bounds().Dx())
 					if err != nil {
 						return
 					}
@@ -285,7 +285,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 					}
 					ResizeHeight = ResizeWidth
 				case ResizeTypeByHeight:
-					isNone, ResizeHeight, err = utils.ParseNumPercentNumNone(a.ResizeHeight, canvas.GetImage().Bounds().Dy())
+					isNone, _, ResizeHeight, err = utils.ParseNumPercentNumNone(a.ResizeHeight, canvas.GetImage().Bounds().Dy())
 					if err != nil {
 						return
 					}
@@ -307,7 +307,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 			case ActionTypeRound:
 				subImg = imageMap[s.ID]
 				isNone, RoundRadius := true, 0
-				isNone, RoundRadius, err = utils.ParseNumPercentNumNone(a.RoundRadius, subImg.GetImage().Bounds().Dx())
+				isNone, _, RoundRadius, err = utils.ParseNumPercentNumNone(a.RoundRadius, subImg.GetImage().Bounds().Dx())
 				if err != nil {
 					return
 				}
@@ -323,7 +323,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 			case ActionTypeCircle:
 				subImg = imageMap[s.ID]
 				isNone, CircleOriginX, CircleOriginY, CircleRadius := true, 0, 0, 0
-				isNone, CircleOriginX, err = utils.ParseNumPercentNumNone(a.CircleOriginX, subImg.GetImage().Bounds().Dx())
+				isNone, _, CircleOriginX, err = utils.ParseNumPercentNumNone(a.CircleOriginX, subImg.GetImage().Bounds().Dx())
 				if err != nil {
 					return
 				}
@@ -331,7 +331,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 					err = fmt.Errorf("CircleOriginX not allow none")
 					return
 				}
-				isNone, CircleOriginY, err = utils.ParseNumPercentNumNone(a.CircleOriginY, subImg.GetImage().Bounds().Dx())
+				isNone, _, CircleOriginY, err = utils.ParseNumPercentNumNone(a.CircleOriginY, subImg.GetImage().Bounds().Dx())
 				if err != nil {
 					return
 				}
@@ -339,7 +339,7 @@ func (mgr *ImageMgrType) GenByImageConfig(imageConfigInfo *ImageConfigInfoType) 
 					err = fmt.Errorf("CircleOriginY not allow none")
 					return
 				}
-				isNone, CircleRadius, err = utils.ParseNumPercentNumNone(a.CircleRadius, subImg.GetImage().Bounds().Dx())
+				isNone, _, CircleRadius, err = utils.ParseNumPercentNumNone(a.CircleRadius, subImg.GetImage().Bounds().Dx())
 				if err != nil {
 					return
 				}

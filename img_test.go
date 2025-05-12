@@ -21,7 +21,7 @@ func TestParseNumPercentNumNone(t *testing.T) {
 		{"23%", 100, false, 23},
 		//{"", 100, false, 23},
 	} {
-		isNone, realSize, err := utils.ParseNumPercentNumNone(unit.numStr, unit.baseSize)
+		isNone, _, realSize, err := utils.ParseNumPercentNumNone(unit.numStr, unit.baseSize)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -56,6 +56,8 @@ func TestParseAbsoluteLocation(t *testing.T) {
 		{"none none none 3", [2]int{320, 640}, [2]int{40, 10}, 3, math.MaxInt32, 40 + 3, math.MaxInt32},
 		//只有y维度
 		{"none none 10% none", [2]int{320, 640}, [2]int{40, 10}, math.MaxInt32, 640 - 64 - 10, math.MaxInt32, 640 - 64},
+		//水平居中
+		{"none mid 10% mid", [2]int{320, 640}, [2]int{40, 10}, (320 - 40) / 2, 640 - 64 - 10, (320 + 40) / 2, 640 - 64},
 		//格式错误
 		//{"none none ", [2]int{320, 640}, [2]int{40, 10}, -1, 640 - 64 - 10, -1, 640 - 64},
 	} {
