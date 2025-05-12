@@ -15,7 +15,7 @@ import (
 	"strings"
 )
 
-//LoadFont 加载字体
+// LoadFont 加载字体
 func LoadFont(fontFile string) (font *truetype.Font, err error) {
 	var fontBytes []byte
 	fontBytes, err = ioutil.ReadFile(fontFile) // 读取字体文件
@@ -39,7 +39,7 @@ func ToRGBA(img image.Image) *image.RGBA {
 	return rgba
 }
 
-//Hex2RGB 将十六进制的颜色码转换为颜色对象,比如#123456=>(R:12,G:34,B:56), #12345678=>((R:12,G:34,B:56,A:78)
+// Hex2RGB 将十六进制的颜色码转换为颜色对象,比如#123456=>(R:12,G:34,B:56), #12345678=>((R:12,G:34,B:56,A:78)
 func Hex2RGB(hexStr string) (c color.Color, err error) {
 	if len(hexStr) <= 0 {
 		err = fmt.Errorf("hexStr is null")
@@ -98,21 +98,21 @@ func Hex2RGB(hexStr string) (c color.Color, err error) {
 	return
 }
 
-//DrawHorizLine 画一条水平线
+// DrawHorizLine 画一条水平线
 func DrawHorizLine(img *image.RGBA, c color.Color, fromX, toX, y int) {
 	for x := fromX; x <= toX; x++ {
 		img.Set(x, y, c)
 	}
 }
 
-//DrawVertLine 画一条竖直线
+// DrawVertLine 画一条竖直线
 func DrawVertLine(img *image.RGBA, c color.Color, x, fromY, toY int) {
 	for y := fromY; y < toY; y++ {
 		img.Set(x, y, c)
 	}
 }
 
-//MeasureText 测量一行文字的宽高
+// MeasureText 测量一行文字的宽高
 func MeasureText(oneLineText string, tf *truetype.Font, dpi, fontSize float64) (width int, height int, err error) {
 	face := truetype.NewFace(tf, &truetype.Options{
 		Size:    fontSize,
@@ -125,7 +125,7 @@ func MeasureText(oneLineText string, tf *truetype.Font, dpi, fontSize float64) (
 	return
 }
 
-//GetFontSizeByHeight 通过文字的高度得到文字的大小（fontsize)
+// GetFontSizeByHeight 通过文字的高度得到文字的大小（fontsize)
 func GetFontSizeByHeight(tf *truetype.Font, dpi float64, fontHeight int) (fontSize float64, err error) {
 	//fromSize, toSize := 0.0, 1638.0 //字体在word中最大为1638
 	fromSize, toSize := 0.0, 72.0 //字体在word中最大为1638
@@ -163,11 +163,17 @@ func GetFontSizeByHeight(tf *truetype.Font, dpi float64, fontHeight int) (fontSi
 	return
 }
 
-//ParseNumPercentNumNone 解析字符串是整数型|百分比数|none,如果是非none，计算返回真正的尺寸
-func ParseNumPercentNumNone(numStr string, baseSize int) (isNone bool, realSize int, err error) {
+// ParseNumPercentNumNone 解析字符串是整数型|百分比数|none,如果是非none，计算返回真正的尺寸
+func ParseNumPercentNumNone(numStr string, baseSize int) (isNone, isMid bool, realSize int, err error) {
 	isNone = false
+	isMid = false
 	if strings.ToLower(strings.TrimSpace(numStr)) == "none" {
 		isNone = true
+		return
+	}
+
+	if strings.ToLower(strings.TrimSpace(numStr)) == "mid" {
+		isMid = true
 		return
 	}
 
@@ -217,7 +223,7 @@ func ParseNumPercentNumNone(numStr string, baseSize int) (isNone bool, realSize 
 	return
 }
 
-//ParseAbsoluteLocation 根据绝对定位配置，计算自身位置信息，ParseAbsoluteLocation("1% none none 2%",{100,200},{20,20})==>(20,20,40,40,nil)(如果没找到，则返回 math.MaxInt32）
+// ParseAbsoluteLocation 根据绝对定位配置，计算自身位置信息，ParseAbsoluteLocation("1% none none 2%",{100,200},{20,20})==>(20,20,40,40,nil)(如果没找到，则返回 math.MaxInt32）
 func ParseAbsoluteLocation(absolutePositionStr string, parentSize [2]int, selfSize [2]int) (minX, minY, maxX, maxY int, err error) {
 	tmp := strings.Split(absolutePositionStr, " ")
 	if len(tmp) != 4 {
@@ -233,12 +239,17 @@ func ParseAbsoluteLocation(absolutePositionStr string, parentSize [2]int, selfSi
 		//对于top进行计算
 		if idx == 0 {
 			parentHeight := parentSize[HeightIdx]
-			isNone, realSize, err1 := ParseNumPercentNumNone(str, parentHeight)
+			isNone, isMid, realSize, err1 := ParseNumPercentNumNone(str, parentHeight)
 			if err1 != nil {
 				err = err1
 				return
 			}
 			if isNone {
+				continue
+			}
+			if isMid {
+				minY = (parentHeight - selfSize[HeightIdx]) / 2
+				maxY = minY + selfSize[HeightIdx]
 				continue
 			}
 			minY = realSize
@@ -247,11 +258,16 @@ func ParseAbsoluteLocation(absolutePositionStr string, parentSize [2]int, selfSi
 		//对于right进行计算
 		if idx == 1 {
 			parentWeight := parentSize[WidthIdx]
-			isNone, realSize, err1 := ParseNumPercentNumNone(str, parentWeight)
+			isNone, isMid, realSize, err1 := ParseNumPercentNumNone(str, parentWeight)
 			if err1 != nil {
 				err = err1
 			}
 			if isNone {
+				continue
+			}
+			if isMid {
+				maxX = (parentWeight + selfSize[WidthIdx]) / 2
+				minX = maxX - selfSize[WidthIdx]
 				continue
 			}
 			maxX = parentWeight - realSize
@@ -261,11 +277,16 @@ func ParseAbsoluteLocation(absolutePositionStr string, parentSize [2]int, selfSi
 		//对于bottom进行计算
 		if idx == 2 {
 			parentHeight := parentSize[HeightIdx]
-			isNone, realSize, err1 := ParseNumPercentNumNone(str, parentHeight)
+			isNone, isMid, realSize, err1 := ParseNumPercentNumNone(str, parentHeight)
 			if err1 != nil {
 				err = err1
 			}
 			if isNone {
+				continue
+			}
+			if isMid {
+				maxY = (parentHeight + selfSize[HeightIdx]) / 2
+				minY = maxY - selfSize[HeightIdx]
 				continue
 			}
 			maxY = parentHeight - realSize
@@ -275,11 +296,17 @@ func ParseAbsoluteLocation(absolutePositionStr string, parentSize [2]int, selfSi
 		//对于left进行计算
 		if idx == 3 {
 			parentWeight := parentSize[WidthIdx]
-			isNone, realSize, err1 := ParseNumPercentNumNone(str, parentWeight)
+			isNone, isMid, realSize, err1 := ParseNumPercentNumNone(str, parentWeight)
 			if err1 != nil {
 				err = err1
 			}
 			if isNone {
+				continue
+			}
+
+			if isMid {
+				minX = (parentWeight - selfSize[WidthIdx]) / 2
+				maxX = minX + selfSize[WidthIdx]
 				continue
 			}
 			minX = realSize
@@ -289,7 +316,7 @@ func ParseAbsoluteLocation(absolutePositionStr string, parentSize [2]int, selfSi
 	return
 }
 
-//ParseRelativeLocation 根据相对定位配置，计算自身位置信息(如果没找到，则返回 math.MaxInt32）
+// ParseRelativeLocation 根据相对定位配置，计算自身位置信息(如果没找到，则返回 math.MaxInt32）
 func ParseRelativeLocation(relativePositionStr string, parentSize [2]int, selfSize [2]int, relativePosition [4]int) (minX, minY, maxX, maxY int, err error) {
 	tmp := strings.Split(relativePositionStr, " ")
 	if len(tmp) != 4 {
@@ -332,7 +359,7 @@ func ParseRelativeLocation(relativePositionStr string, parentSize [2]int, selfSi
 				自身的上边距离相对元素，有top的距离
 			*/
 			parentHeight := parentSize[HeightIdx]
-			isNone, realSize, err1 := ParseNumPercentNumNone(str, parentHeight)
+			isNone, _, realSize, err1 := ParseNumPercentNumNone(str, parentHeight)
 			if err1 != nil {
 				err = err1
 				return
@@ -352,7 +379,7 @@ func ParseRelativeLocation(relativePositionStr string, parentSize [2]int, selfSi
 				自身的右边距离相对元素，有right的距离
 			*/
 			parentWeight := parentSize[WidthIdx]
-			isNone, realSize, err1 := ParseNumPercentNumNone(str, parentWeight)
+			isNone, _, realSize, err1 := ParseNumPercentNumNone(str, parentWeight)
 			if err1 != nil {
 				err = err1
 			}
@@ -377,7 +404,7 @@ func ParseRelativeLocation(relativePositionStr string, parentSize [2]int, selfSi
 				自身的下边距离相对元素，有bottom的距离
 			*/
 			parentHeight := parentSize[HeightIdx]
-			isNone, realSize, err1 := ParseNumPercentNumNone(str, parentHeight)
+			isNone, _, realSize, err1 := ParseNumPercentNumNone(str, parentHeight)
 			if err1 != nil {
 				err = err1
 			}
@@ -397,7 +424,7 @@ func ParseRelativeLocation(relativePositionStr string, parentSize [2]int, selfSi
 				自身的左边距离相对元素，有left的距离
 			*/
 			parentWeight := parentSize[WidthIdx]
-			isNone, realSize, err1 := ParseNumPercentNumNone(str, parentWeight)
+			isNone, _, realSize, err1 := ParseNumPercentNumNone(str, parentWeight)
 			if err1 != nil {
 				err = err1
 			}
@@ -411,7 +438,7 @@ func ParseRelativeLocation(relativePositionStr string, parentSize [2]int, selfSi
 	return
 }
 
-//CalcRealSize 判断和计算sizeStr是纯数字类型的指标，还是百分百类型的，都转换为数字类型的返回， CalcRealSize("30", 200)=>30, CalcRealSize("30%", 200)=>60,CalcRealSize("30.0%", 200)=>60,
+// CalcRealSize 判断和计算sizeStr是纯数字类型的指标，还是百分百类型的，都转换为数字类型的返回， CalcRealSize("30", 200)=>30, CalcRealSize("30%", 200)=>60,CalcRealSize("30.0%", 200)=>60,
 func CalcRealSize(sizeStr string, parentSize int) (size int, err error) {
 	if len(sizeStr) == 0 {
 		//err = fmt.Errorf("unvalid format for sizeStr=" + sizeStr)
